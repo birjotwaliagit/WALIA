@@ -1,0 +1,13 @@
+{
+    "title": "{{client_name}}",
+    "industry": "{{industry}}",
+    "website": "{{website}}",
+    "sections": {
+        "overview": "{{overview}}",
+        "challenge": "{{challenge.intro}}",
+        "highlights": [
+            {"metric": "{{highlights.0.metric}}", "result": "{{highlights.0.result}}"}
+        ],
+        "testimonial": "{{testimonial}}"
+    }
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio JSON Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Portfolio JSON Generator</h1>
+    <form id="input-form">
+        <div>
+            <label for="rawInput">Raw Case Study:</label><br>
+            <textarea id="rawInput" rows="10" placeholder="Paste the raw case study text here"></textarea>
+        </div>
+        <button type="button" id="generateBtn">Create JSON</button>
+        <button type="button" id="exampleBtn">Load Example</button>
+        <button type="button" id="themeBtn">Toggle Theme</button>
+    </form>
+    <div id="error"></div>
+    <div id="warnings"></div>
+    <h2>Parsed Data:</h2>
+    <textarea id="parsedPreview" rows="10" readonly></textarea>
+    <h2>Output JSON:</h2>
+    <textarea id="outputJson" rows="15" readonly></textarea><br>
+    <button type="button" id="downloadBtn" disabled>Download JSON</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

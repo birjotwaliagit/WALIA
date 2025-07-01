@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementor Case Study JSON Generator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        textarea, input[type="file"] {
+            width: calc(100% - 22px); /* Account for padding and border */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .output-area {
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffebeb;
+            border: 1px solid red;
+            border-radius: 4px;
+        }
+        .warnings-message {
+            color: #856404;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+        }
+        .warnings-message ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Elementor Case Study JSON Generator</h1>
+
+        <div>
+            <label for="jsonFile">Base Elementor JSON File:</label>
+            <input type="file" id="jsonFile" accept=".json" required>
+        </div>
+
+        <div>
+            <label for="rawCaseStudyText">Raw Case Study Text:</label>
+            <textarea id="rawCaseStudyText" placeholder="Paste your raw case study text here..." required></textarea>
+        </div>
+
+        <button id="generateJsonBtn">Generate JSON</button>
+
+        <div class="output-area">
+            <label for="outputJson">Generated JSON:</label>
+            <textarea id="outputJson" readonly placeholder="Generated JSON will appear here..."></textarea>
+        </div>
+
+        <button id="downloadJsonBtn" disabled>Download JSON</button>
+
+        <div id="errorMessages" class="error-message" style="display: none;"></div>
+        <div id="warningMessages" class="warnings-message" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

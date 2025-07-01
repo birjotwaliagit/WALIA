@@ -248,19 +248,26 @@ function parseTestimonial(lines) {
 function injectDataIntoTemplate(template, data) {
     // Resolve a dotted path from the parsed data object
     function getValue(path) {
-        let parts = path.split('.');
+        const parts = path.split('.');
         let val = data;
-        for (let p of parts) {
+        for (let i = 0; i < parts.length; i++) {
+            const p = parts[i];
             if (Array.isArray(val)) {
-                let idx = parseInt(p, 10);
-                if (isNaN(idx) || !(idx in val)) return '';
+                const idx = parseInt(p, 10);
+                if (isNaN(idx) || !(idx in val)) {
+                    return '';
+                }
                 val = val[idx];
             } else if (val && typeof val === 'object' && p in val) {
                 val = val[p];
+            } else if (val === data && data.sections && p in data.sections) {
+                // allow shorthand tokens that omit the "sections." prefix
+                val = data.sections[p];
             } else {
                 return '';
             }
         }
+
         if (val === undefined || val === null) return '';
         if (typeof val === 'object') return JSON.stringify(val);
         return val.toString();

@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessagesElement = document.getElementById('errorMessages');
     const warningMessagesElement = document.getElementById('warningMessages');
 
+    const MAX_RAW_TEXT_LENGTH = 100000; // Approx 100KB, should be generous
+
     let generatedJson = null;
     let clientNameForFile = 'elementor_case_study';
 

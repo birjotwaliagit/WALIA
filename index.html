@@ -16,6 +16,8 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
         }
         h1 {
             text-align: center;
@@ -27,15 +29,13 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        textarea, input[type="file"] {
+        textarea {
             width: calc(100% - 22px); /* Account for padding and border */
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
-        }
-        textarea {
             min-height: 150px;
             resize: vertical;
         }
@@ -48,6 +48,7 @@
             cursor: pointer;
             font-size: 16px;
             margin-right: 10px;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #0056b3;
@@ -84,11 +85,6 @@
 <body>
     <div class="container">
         <h1>Elementor Case Study JSON Generator</h1>
-
-        <div>
-            <label for="jsonFile">Base Elementor JSON File:</label>
-            <input type="file" id="jsonFile" accept=".json" required>
-        </div>
 
         <div>
             <label for="rawCaseStudyText">Raw Case Study Text:</label>

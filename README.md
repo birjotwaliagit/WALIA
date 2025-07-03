@@ -17,7 +17,7 @@ Provide your raw case study text as an input file:
 python3 generate.py INPUT.txt
 ```
 
-The script will parse the text, request corrections from GPT-4o, fill the placeholders in `template.json`, and output a file named like `case-study-client-name_GOOD_FILE.json` ready for import into Elementor.
+The script will parse the text, request corrections from GPT-4o, fill a built-in Elementor template, and output a file named like `case-study-client-name_GOOD_FILE.json` ready for import into Elementor.
 
 ## Web Interface
 Run the small Flask server and open your browser to `http://localhost:5000`:
@@ -26,4 +26,4 @@ Run the small Flask server and open your browser to `http://localhost:5000`:
 python3 app.py
 ```
 
-The page lets you upload a template (or use the default), paste your raw case study text, and download the generated JSON. A preview panel displays the content so you can inspect it before saving.
+The page lets you optionally upload a custom template though a rich default is built in, paste your raw case study text, and download the generated JSON. A preview panel displays the content so you can inspect it before saving.

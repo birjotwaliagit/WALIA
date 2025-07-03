@@ -8,11 +8,12 @@
     header{background:#333;color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center}
     main{display:flex;flex-wrap:wrap;padding:1rem}
     .panel{flex:1 1 300px;padding:1rem;box-sizing:border-box}
-    textarea{width:100%;height:300px}
+    textarea{width:100%;height:300px;font-family:monospace}
     pre{background:#f5f5f5;padding:1rem;overflow:auto;max-height:400px}
-    button{padding:.5rem 1rem}
+    button{padding:.5rem 1rem;cursor:pointer}
     .hidden{display:none}
-  </style>
+    .spinner{display:none;width:20px;height:20px;border:2px solid #ccc;border-top-color:#333;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 </head>
 <body>
 <header>
@@ -31,18 +32,19 @@
       <label>Raw Text</label>
       <textarea id="raw" placeholder="Paste your raw case-study here..."></textarea>
     </div>
-    <button id="generate">Generate JSON</button>
+    <button id="generate">Generate JSON</button> <span id="spin" class="spinner"></span>
     <div id="error" style="color:red"></div>
   </div>
   <div class="panel" id="output-panel">
     <a id="download" class="hidden" href="#">Download</a>
-    <pre id="preview" class="hidden"></pre>
+    <pre id="preview" class="hidden"></pre> <button id="copy" class="hidden">Copy</button>
   </div>
 </main>
 <footer style="text-align:center;padding:1rem;">&copy; 2025 Your Company</footer>
 <script>
 const btn = document.getElementById('generate');
 btn.onclick = async () => {
+  const spin=document.getElementById("spin");
   const error = document.getElementById('error');
   error.textContent='';
   const form = new FormData();
@@ -51,6 +53,7 @@ btn.onclick = async () => {
   const file = document.getElementById('template').files[0];
   if(file){form.append('template', file);}
   btn.disabled = true;
+  spin.style.display="inline-block";
   btn.textContent = 'Generating...';
   try{
     const resp = await fetch('/generate', {method:'POST', body:form});
@@ -66,10 +69,14 @@ btn.onclick = async () => {
     const pre = document.getElementById('preview');
     pre.textContent = data.content;
     pre.classList.remove('hidden');
+    const copyBtn=document.getElementById('copy');
+    copyBtn.classList.remove('hidden');
+    copyBtn.onclick=()=>{navigator.clipboard.writeText(data.content);};
   }catch(e){
     error.textContent = e.message;
   }finally{
     btn.disabled=false;
+  spin.style.display="none";
     btn.textContent='Generate JSON';
   }
 };

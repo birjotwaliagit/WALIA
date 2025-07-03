@@ -114,15 +114,15 @@ def check_placeholders(obj: dict):
     if leftovers:
         raise ValueError(f'Unreplaced placeholders found: {set(leftovers)}')
 
-def main():
-    if len(sys.argv) < 2:
-        print('Usage: python3 generate.py INPUT.txt')
-        sys.exit(1)
-    with open(sys.argv[1], 'r', encoding='utf-8') as f:
-        raw = f.read()
+def generate_case_study(raw: str, template: dict | None = None) -> tuple[dict, str]:
+    """Return filled template dict and slug for filename."""
+    if template is None:
+        with open('template.json', 'r', encoding='utf-8') as f:
+            template = json.load(f)
+
     parsed = parse_raw(raw)
 
-    prompt = f"Here is the raw data:\n\n{raw}\n\nPlease return JSON with cleaned sections." 
+    prompt = f"Here is the raw data:\n\n{raw}\n\nPlease return JSON with cleaned sections."
     try:
         enhanced = call_gpt(prompt)
         for k, v in enhanced.items():
@@ -130,14 +130,25 @@ def main():
     except Exception as e:
         print('GPT call failed:', e, file=sys.stderr)
 
-    with open('template.json', 'r', encoding='utf-8') as f:
-        template = json.load(f)
-
     result = fill_template(template, parsed)
     check_placeholders(result)
 
-    client = parsed.get('client', 'case-study')
-    slug = slugify(client)
+    slug = slugify(parsed.get('client', 'case-study'))
+    return result, slug
+
+
+def main():
+    if len(sys.argv) < 2:
+        print('Usage: python3 generate.py INPUT.txt [TEMPLATE.json]')
+        sys.exit(1)
+    with open(sys.argv[1], 'r', encoding='utf-8') as f:
+        raw = f.read()
+    template = None
+    if len(sys.argv) > 2:
+        with open(sys.argv[2], 'r', encoding='utf-8') as tf:
+            template = json.load(tf)
+
+    result, slug = generate_case_study(raw, template)
     filename = f'case-study-{slug}_GOOD_FILE.json'
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(result, f, ensure_ascii=False, indent=2)

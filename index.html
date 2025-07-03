@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Elementor JSON Generator</title>
+  <style>
+    body{font-family:sans-serif;margin:0}
+    header{background:#333;color:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center}
+    main{display:flex;flex-wrap:wrap;padding:1rem}
+    .panel{flex:1 1 300px;padding:1rem;box-sizing:border-box}
+    textarea{width:100%;height:300px}
+    pre{background:#f5f5f5;padding:1rem;overflow:auto;max-height:400px}
+    button{padding:.5rem 1rem}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+<header>
+  <div>Elementor JSON Generator</div>
+  <div><a id="help" href="#">?</a></div>
+</header>
+<main>
+  <div class="panel" id="input-panel">
+    <div>
+      <label>Base JSON Upload <input type="file" id="template"></label>
+    </div>
+    <div>
+      <label><input type="checkbox" id="use-default" checked> Use Default Template</label>
+    </div>
+    <div>
+      <label>Raw Text</label>
+      <textarea id="raw" placeholder="Paste your raw case-study here..."></textarea>
+    </div>
+    <button id="generate">Generate JSON</button>
+    <div id="error" style="color:red"></div>
+  </div>
+  <div class="panel" id="output-panel">
+    <a id="download" class="hidden" href="#">Download</a>
+    <pre id="preview" class="hidden"></pre>
+  </div>
+</main>
+<footer style="text-align:center;padding:1rem;">&copy; 2025 Your Company</footer>
+<script>
+const btn = document.getElementById('generate');
+btn.onclick = async () => {
+  const error = document.getElementById('error');
+  error.textContent='';
+  const form = new FormData();
+  form.append('text', document.getElementById('raw').value);
+  form.append('use_default', document.getElementById('use-default').checked ? 'true' : 'false');
+  const file = document.getElementById('template').files[0];
+  if(file){form.append('template', file);}
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  try{
+    const resp = await fetch('/generate', {method:'POST', body:form});
+    const data = await resp.json();
+    if(!resp.ok){throw new Error(data.error || 'Error');}
+    const blob = new Blob([data.content], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const dl = document.getElementById('download');
+    dl.href = url;
+    dl.download = data.filename;
+    dl.textContent = '⇩ Download ' + data.filename;
+    dl.classList.remove('hidden');
+    const pre = document.getElementById('preview');
+    pre.textContent = data.content;
+    pre.classList.remove('hidden');
+  }catch(e){
+    error.textContent = e.message;
+  }finally{
+    btn.disabled=false;
+    btn.textContent='Generate JSON';
+  }
+};
+</script>
+</body>
+</html>

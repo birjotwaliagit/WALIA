@@ -1,0 +1,16 @@
+body { font-family: Arial, sans-serif; margin: 20px; max-width: 800px; }
+body[data-theme="dark"] { background: #111; color: #eee; }
+h1 { font-size: 1.5em; margin-bottom: 0.5em; }
+form { margin-bottom: 1em; }
+form div { margin-bottom: 0.5em; }
+label { font-weight: bold; }
+#rawInput, #outputJson, #parsedPreview { width: 100%; }
+#generateBtn, #downloadBtn { margin-top: 0.5em; }
+#exampleBtn, #themeBtn { margin-top: 0.5em; }
+#outputJson, #rawInput, #parsedPreview { background: #fff; color: #000; }
+body[data-theme="dark"] #outputJson,
+body[data-theme="dark"] #rawInput,
+body[data-theme="dark"] #parsedPreview { background: #222; color: #eee; }
+#error { margin: 0.5em 0; color: red; }
+#warnings { margin: 0.5em 0; color: #cc8400; }
+#warnings ul { margin: 0; padding-left: 20px; }
